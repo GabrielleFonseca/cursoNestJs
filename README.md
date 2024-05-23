@@ -11,18 +11,16 @@ Curso: [NestJS do zero com TypeORM, Mongoose, Prisma e Swagger](https://udemy.co
 ## Installation
 
 ```bash
+# install correct node version
 $ nvm install 20.9.0
-```
 
-```bash
+# use correct node version
 $ nvm use 20.9.0
-```
 
-```bash
+# install PNPM
 $ npm install -g pnpm
-```
 
-```bash
+# install project dependencies
 $ pnpm install
 ```
 
