@@ -1,53 +1,92 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesController } from './courses.controller';
+import { CoursesService } from './courses.service';
 
 describe('CoursesController', () => {
   let controller: CoursesController;
+  let service: CoursesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CoursesController],
+      providers: [
+        {
+          provide: CoursesService,
+          useValue: {
+            createCourse: jest.fn(),
+            findAllCourses: jest.fn(),
+            findCourseById: jest.fn(),
+            updateCourse: jest.fn(),
+            deleteCourse: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<CoursesController>(CoursesController);
+    service = module.get<CoursesService>(CoursesService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 
-  it('should create a course', () => {
-    const courseData = {
-      name: 'New Course',
-      description: 'Course Description',
-    };
-    expect(controller.createCourse(courseData)).toEqual(courseData);
+  describe('createCourse', () => {
+    it('should create a course', () => {
+      const course = {
+        id: 1,
+        name: 'NestJS',
+        description: 'NestJS course',
+        tags: ['nestjs', 'nodejs', 'typescript', 'backend', 'javascript'],
+      };
+
+      controller.createCourse(course);
+
+      expect(service.createCourse).toHaveBeenCalledWith(course);
+    });
   });
 
-  it('should find all courses', () => {
-    expect(controller.findAllCourses()).toBe('All courses');
+  describe('findAllCourses', () => {
+    it('should find all courses', () => {
+      controller.findAllCourses();
+
+      expect(service.findAllCourses).toHaveBeenCalled();
+    });
   });
 
-  it('should find one course by id', () => {
-    const courseId = '1';
-    expect(controller.findOneCourse(courseId)).toBe(
-      `Course with ID ${courseId}`,
-    );
+  describe('findOneCourse', () => {
+    it('should find one course by id', () => {
+      const id = 1;
+
+      controller.findOneCourse(id);
+
+      expect(service.findCourseById).toHaveBeenCalledWith(id);
+    });
   });
 
-  it('should update a course', () => {
-    const courseId = '1';
-    const updateData = {
-      name: 'Updated Course',
-      description: 'Updated Description',
-    };
-    expect(controller.updateCourse(courseId, updateData)).toEqual(updateData);
+  describe('updateCourse', () => {
+    it('should update a course', () => {
+      const id = 1;
+      const course = {
+        name: 'NestJS',
+        description: 'NestJS course',
+        tags: ['nestjs', 'nodejs', 'typescript', 'backend', 'javascript'],
+      };
+
+      controller.updateCourse(id, course);
+
+      expect(service.updateCourse).toHaveBeenCalledWith(id, course);
+    });
   });
 
-  it('should delete a course', () => {
-    const courseId = '1';
-    expect(controller.deleteCourse(courseId)).toBe(
-      `Course with ID ${courseId} deleted`,
-    );
+  describe('deleteCourse', () => {
+    it('should delete a course', () => {
+      const id = 1;
+
+      controller.deleteCourse(id);
+
+      expect(service.deleteCourse).toHaveBeenCalledWith(id);
+    });
   });
 });
