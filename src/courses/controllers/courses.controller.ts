@@ -8,14 +8,16 @@ import {
   Put,
 } from '@nestjs/common';
 import { CoursesService } from '../services/courses.service';
+import { CreateCourseDTO } from '../dto/create-curse.dto';
+import { UpdateCourseDTO } from '../dto/update-courses.dto';
 
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  createCourse(@Body() body: any) {
-    return this.coursesService.createCourse(body);
+  createCourse(@Body() createCourseDTO: CreateCourseDTO) {
+    return this.coursesService.createCourse(createCourseDTO);
   }
 
   @Get()
@@ -25,16 +27,19 @@ export class CoursesController {
 
   @Get(':id')
   findOneCourse(@Param('id') id: number) {
-    return this.coursesService.findCourseById(+id);
+    return this.coursesService.findCourseById(id);
   }
 
   @Put(':id')
-  updateCourse(@Param('id') id: number, @Body() body: any) {
-    return this.coursesService.updateCourse(+id, body);
+  updateCourse(
+    @Param('id') id: number,
+    @Body() updateCourseDTO: UpdateCourseDTO,
+  ) {
+    return this.coursesService.updateCourse(id, updateCourseDTO);
   }
 
   @Delete(':id')
   deleteCourse(@Param('id') id: number) {
-    return this.coursesService.deleteCourse(+id);
+    return this.coursesService.deleteCourse(id);
   }
 }
