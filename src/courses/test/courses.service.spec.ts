@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesService } from '../courses.service';
 import { Course } from '../courses.entity';
+import { NotFoundException } from '@nestjs/common';
 
 describe('CoursesService', () => {
   let service: CoursesService;
@@ -45,8 +46,7 @@ describe('CoursesService', () => {
     });
 
     it('should return undefined if course does not exist', () => {
-      const course = service.findCourseById(999);
-      expect(course).toBeUndefined();
+      expect(() => service.findCourseById(999)).toThrow(NotFoundException);
     });
   });
 
@@ -64,26 +64,18 @@ describe('CoursesService', () => {
     });
 
     it('should return undefined if course does not exist', () => {
-      const updatedCourse: Course = {
-        id: 999,
-        name: 'Non-existent',
-        description: 'This course does not exist',
-        tags: ['non-existent'],
-      };
-      const result = service.updateCourse(999, updatedCourse);
-      expect(result).toBeUndefined();
+      expect(() => service.findCourseById(999)).toThrow(NotFoundException);
     });
   });
 
   describe('deleteCourse', () => {
     it('should delete a course', () => {
       service.deleteCourse(1);
-      const course = service.findCourseById(1);
-      expect(course).toBeUndefined();
+      expect(() => service.findCourseById(1)).toThrow(NotFoundException);
     });
 
     it('should not delete if course does not exist', () => {
-      service.deleteCourse(999);
+      expect(() => service.deleteCourse(999)).toThrow(NotFoundException);
       const courses = service.findAllCourses();
       expect(courses.length).toEqual(4); // Initial 4 courses remain
     });

@@ -8,7 +8,7 @@ describe('CoursesModule', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [],
+      imports: [CoursesModule],
       controllers: [CoursesController],
       providers: [CoursesService],
       exports: [],
