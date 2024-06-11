@@ -1,7 +1,7 @@
-import { CreateCourseDTO } from './../dto/create-curse.dto';
+import { CreateCourseDTO } from './dto/create-curse.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Course } from '../courses.entity';
-import { UpdateCourseDTO } from '../dto/update-courses.dto';
+import { Course } from './courses.entity';
+import { UpdateCourseDTO } from './dto/update-courses.dto';
 
 @Injectable()
 export class CoursesService {
@@ -32,10 +32,19 @@ export class CoursesService {
     },
   ];
 
+  // createCourse(createCourseDTO: CreateCourseDTO) {
+  //   this.courses.push(createCourseDTO);
+  //   return createCourseDTO;
+  // }
+
   createCourse(createCourseDTO: CreateCourseDTO) {
-    this.courses.push(createCourseDTO);
-    return createCourseDTO;
-  }
+    const newCourse: Course = {
+      id: this.courses.length + 1, // Generate a new id
+      ...createCourseDTO,
+    };
+    this.courses.push(newCourse);
+    return newCourse;
+  } // gerado por GPT para resolver erro por enquanto
 
   findAllCourses() {
     return this.courses;
@@ -51,19 +60,34 @@ export class CoursesService {
     return course;
   }
 
+  // updateCourse(id: number, updateCourseDTO: UpdateCourseDTO) {
+  //   const existingCourse = this.findCourseById(id);
+  //   if (existingCourse as any) {
+  //     const courseIndex = this.courses.findIndex((course) => course.id === id);
+  //     this.courses[courseIndex] = {
+  //       id,
+  //       ...updateCourseDTO,
+  //     };
+  //     return this.courses[courseIndex];
+  //   } else {
+  //     throw new NotFoundException(`Course ${id} not found`);
+  //   }
+  // }
+
   updateCourse(id: number, updateCourseDTO: UpdateCourseDTO) {
     const existingCourse = this.findCourseById(id);
-    if (existingCourse as any) {
+    if (existingCourse) {
       const courseIndex = this.courses.findIndex((course) => course.id === id);
-      this.courses[courseIndex] = {
-        id,
+      const updatedCourse: Course = {
+        ...existingCourse,
         ...updateCourseDTO,
       };
-      return this.courses[courseIndex];
+      this.courses[courseIndex] = updatedCourse;
+      return updatedCourse;
     } else {
       throw new NotFoundException(`Course ${id} not found`);
     }
-  }
+  } // gerado por GPT para resolver erro por enquanto
 
   deleteCourse(id: number) {
     const courseIndex = this.courses.findIndex((course) => course.id === id);

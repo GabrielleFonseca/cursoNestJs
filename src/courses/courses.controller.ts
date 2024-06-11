@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CoursesService } from '../services/courses.service';
-import { CreateCourseDTO } from '../dto/create-curse.dto';
-import { UpdateCourseDTO } from '../dto/update-courses.dto';
+import { CoursesService } from './courses.service';
+import { CreateCourseDTO } from './dto/create-curse.dto';
+import { UpdateCourseDTO } from './dto/update-courses.dto';
 
 @Controller('courses')
 export class CoursesController {
