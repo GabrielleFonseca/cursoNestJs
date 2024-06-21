@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesService } from '../courses.service';
-import { Course } from '../courses.entity';
+import { Course } from '../entities/courses.entity';
 import { NotFoundException } from '@nestjs/common';
 
 describe('CoursesService', () => {
