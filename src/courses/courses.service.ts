@@ -50,14 +50,16 @@ export class CoursesService {
   }
 
   updateCourse(id: number, updateCourseDTO: any) {
-    const existingCourse = this.findCourseById(id);
-    if (existingCourse as any) {
-      const courseIndex = this.courses.findIndex((course) => course.id === id);
-      this.courses[courseIndex] = {
+    const existingCourseIndex = this.courses.findIndex(
+      (course) => course.id === id,
+    );
+
+    if (existingCourseIndex >= 0) {
+      this.courses[existingCourseIndex] = {
         id,
         ...updateCourseDTO,
       };
-      return this.courses[courseIndex];
+      return this.courses[existingCourseIndex];
     } else {
       throw new NotFoundException(`Course ${id} not found`);
     }

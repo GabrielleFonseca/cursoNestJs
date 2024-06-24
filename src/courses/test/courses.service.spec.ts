@@ -64,7 +64,9 @@ describe('CoursesService', () => {
     });
 
     it('should throw NotFoundException if the course does not exist', () => {
-      expect(() => service.findCourseById(999)).toThrow(NotFoundException); //TODO: por algum motivo a cobertura de testes não está cobrindo essa linha
+      expect(() => service.updateCourse(999, 'Non-existing Course')).toThrow(
+        NotFoundException,
+      );
     });
   });
 
