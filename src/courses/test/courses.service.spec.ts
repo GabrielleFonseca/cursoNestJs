@@ -45,7 +45,7 @@ describe('CoursesService', () => {
       expect(course?.id).toEqual(1);
     });
 
-    it('should return undefined if course does not exist', () => {
+    it('should throw NotFoundException if course does not exist', () => {
       expect(() => service.findCourseById(999)).toThrow(NotFoundException);
     });
   });
@@ -63,8 +63,8 @@ describe('CoursesService', () => {
       expect(course?.name).toEqual('Updated NestJS');
     });
 
-    it('should return undefined if course does not exist', () => {
-      expect(() => service.findCourseById(999)).toThrow(NotFoundException);
+    it('should throw NotFoundException if the course does not exist', () => {
+      expect(() => service.findCourseById(999)).toThrow(NotFoundException); //TODO: por algum motivo a cobertura de testes não está cobrindo essa linha
     });
   });
 
@@ -74,7 +74,7 @@ describe('CoursesService', () => {
       expect(() => service.findCourseById(1)).toThrow(NotFoundException);
     });
 
-    it('should not delete if course does not exist', () => {
+    it('should throw NotFoundException if course does not exist', () => {
       expect(() => service.deleteCourse(999)).toThrow(NotFoundException);
       const courses = service.findAllCourses();
       expect(courses.length).toEqual(4); // Initial 4 courses remain
