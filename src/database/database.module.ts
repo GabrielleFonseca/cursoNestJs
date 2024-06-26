@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Course } from '../courses/entities/courses.entity';
 import { DataSourceOptions } from 'typeorm';
-import { Tag } from 'src/courses/entities/tags.entity';
+import { Tag } from '../courses/entities/tags.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',

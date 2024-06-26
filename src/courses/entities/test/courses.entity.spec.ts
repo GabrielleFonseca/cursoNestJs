@@ -1,4 +1,5 @@
 import { Course } from '../courses.entity';
+import { Tag } from '../tags.entity';
 
 describe('Course', () => {
   let course: Course;
@@ -37,8 +38,12 @@ describe('Course', () => {
     });
 
     it('should allow setting tags', () => {
-      course.tags = ['test', 'course'];
-      expect(course.tags).toEqual(['test', 'course']);
+      const tag1 = new Tag();
+      tag1.name = 'test';
+      const tag2 = new Tag();
+      tag2.name = 'course';
+      course.tags = [tag1, tag2];
+      expect(course.tags).toEqual([tag1, tag2]);
     });
   });
 });

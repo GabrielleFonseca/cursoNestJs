@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule, dataSourceOptions } from '../database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule, dataSourceOptions } from '../database.module'; // Verifique se o caminho está correto
 
 describe('DatabaseModule', () => {
   let databaseModule: DatabaseModule;
